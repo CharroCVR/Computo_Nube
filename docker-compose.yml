@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  web:
+    image: httpd
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/local/apache2/htdocs/
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: midb
+      MYSQL_USER: vardo
+      MYSQL_PASSWORD: 12345
