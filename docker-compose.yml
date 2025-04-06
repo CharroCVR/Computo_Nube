@@ -1,17 +1,16 @@
-version: '3.8'
-
 services:
-  web:
-    image: httpd
+  apache:
+    image: httpd:latest
+    container_name: apache_contenedor
     ports:
-      - "8080:80"
-    volumes:
-      - ./html:/usr/local/apache2/htdocs/
+      - "8081:80"
+    depends_on:
+      - mariadb
 
-  db:
-    image: mariadb
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: midb
-      MYSQL_USER: vardo
-      MYSQL_PASSWORD: 12345
+      MYSQL_ROOT_PASSWORD: 12345
+    ports:
+      - "3307:3307"
