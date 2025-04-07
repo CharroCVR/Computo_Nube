@@ -2,7 +2,7 @@ name: Docker Build and Push
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 j00obs:
   build:
@@ -28,4 +28,4 @@ j00obs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/mi_servicio:latest
 
       - name: Ejecutar contenedor de prueba
-        run: docker run -d -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/mi_servicio:latest
+        run: docker run -d -p 8081:81 ${{ secrets.DOCKER_USERNAME }}/mi_servicio:latest
