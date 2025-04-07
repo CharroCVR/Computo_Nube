@@ -1,0 +1,31 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches: [ master ]
+
+j00obs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Iniciar sesión en DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Construir la imagen Docker
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/mi_servicio:latest .
+
+      - name: Subir imagen a DockerHub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/mi_servicio:latest
+
+      - name: Ejecutar contenedor de prueba
+        run: docker run -d -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/mi_servicio:latest
